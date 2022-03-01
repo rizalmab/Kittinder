@@ -1,7 +1,14 @@
 // import "./App.css";
+import DatingCards from "./components/DatingCards";
+import Header from "./components/Header";
 
 function App() {
-  return <div className="App text-2xl container mx-auto text-red-700">App</div>;
+  return (
+    <div className="App text-white">
+      <Header />
+      <DatingCards />
+    </div>
+  );
 }
 
 export default App;
