@@ -10,7 +10,6 @@ const Users = [
         id: 1,
         name: "Tabbie",
         imgUrl: ["url1", "url2"],
-        likedBy: [],
       },
     ],
     dislikedCats: [
