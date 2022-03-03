@@ -1,11 +1,11 @@
 //* Require method
-// const express = require("express");
-// const mongoose = require("mongoose");
+const express = require("express");
+const mongoose = require("mongoose");
 // require("dotenv").config({ path: "../.env" });
-//* ES6 Import method
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
+
+// Import Routes middleware
+const cardsController = require("./controllers/cards.controller");
 
 // App config
 const app = express();
@@ -19,8 +19,6 @@ console.log("process.env.PORT", process.env.PORT);
 // DB Config
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  //   useCreateIndex: true,
-  //   useUnifiedTopology: true,
 });
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB successfully!");
@@ -28,8 +26,11 @@ mongoose.connection.once("open", () => {
 
 // API endpoints
 app.get("/", (req, res) => {
-  res.status(200).send("Hello");
+  res.status(200).send("API plain page");
 });
+
+// Routes middleware
+app.use("/api/cards", cardsController);
 
 // Listener
 app.listen(PORT, () => {
