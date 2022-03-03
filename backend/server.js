@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 // Import Routes middleware
-const cardsController = require("./controllers/cards.controller");
+const catsController = require("./controllers/catsController");
 
 // App config
 const app = express();
@@ -24,13 +24,13 @@ mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB successfully!");
 });
 
+// Routes middleware
+app.use("/api/cats", catsController);
+
 // API endpoints
 app.get("/", (req, res) => {
   res.status(200).send("API plain page");
 });
-
-// Routes middleware
-app.use("/api/cards", cardsController);
 
 // Listener
 app.listen(PORT, () => {

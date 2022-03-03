@@ -1,18 +1,24 @@
 const express = require("express");
-const CardsModel = require("../models/cardsModel");
+const Cat = require("../models/cat");
 const app = express.Router();
 const catData = require("../models/seedData/catsSeed");
 
-// SEED "api/cards/seed"
+// SEED "api/cats/seed"
 app.get("/seed", async (req, res) => {
-  await CardsModel.deleteMany({});
-  const cardSeed = await CardsModel.create(catData);
+  await Cat.deleteMany({});
+  const catsSeed = await Cat.create(catData);
+  console.log("catData", catData);
+  console.log("Cats seeded!");
+  res.status(200).json({
+    message: "Cats seed successful",
+    data: catsSeed,
+  });
 });
 
-// POST "api/cards"
+// POST "api/cats"
 app.post("/", (req, res) => {
   const dbCard = req.body;
-  CardsModel.create(dbCard, (err, data) => {
+  Cat.create(dbCard, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -21,9 +27,9 @@ app.post("/", (req, res) => {
   });
 });
 
-// GET "api/cards"
+// GET "api/cats"
 app.get("/", (req, res) => {
-  CardsModel.find((err, data) => {
+  Cat.find((err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
