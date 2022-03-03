@@ -1,8 +1,8 @@
 //* Require method
 const express = require("express");
 const mongoose = require("mongoose");
-// require("dotenv").config({ path: "../.env" });
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 // Import Routes middleware
 const cardsController = require("./controllers/cards.controller");
@@ -11,10 +11,10 @@ const cardsController = require("./controllers/cards.controller");
 const app = express();
 dotenv.config({ path: "../.env" });
 const PORT = process.env.PORT || 8001;
-console.log("process.env.PORT", process.env.PORT);
-// console.log("process.env.MONGODB_URI", process.env.MONGODB_URI);
 
 // Middleware
+app.use(express.json());
+app.use(cors());
 
 // DB Config
 mongoose.connect(process.env.MONGODB_URI, {

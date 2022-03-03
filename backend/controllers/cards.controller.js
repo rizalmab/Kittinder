@@ -1,35 +1,35 @@
 const express = require("express");
-const Cards = require("../models/cardsModel");
+const CardsModel = require("../models/cardsModel");
 const app = express.Router();
-// import Cards from "../models/cards.model";
+const catData = require("../models/seedData/catsSeed");
+
+// SEED "api/cards/seed"
+app.get("/seed", async (req, res) => {
+  await CardsModel.deleteMany({});
+  const cardSeed = await CardsModel.create(catData);
+});
 
 // POST "api/cards"
 app.post("/", (req, res) => {
-  try {
-    const dbCard = req.body;
-    const newCard = CardsModel.create(dbCard);
-    res.status(200).json({
-      status: "ok",
-      message: "new Card created",
-      data: newCard,
-    });
-  } catch (err) {
-    console.log(error);
-  }
+  const dbCard = req.body;
+  CardsModel.create(dbCard, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(data);
+    }
+  });
 });
 
 // GET "api/cards"
 app.get("/", (req, res) => {
-  try {
-    const allCards = CardsModel.find({});
-    res.status(200).json({
-      status: "ok",
-      message: "found all cards",
-      data: allCards,
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  CardsModel.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
 });
 
 module.exports = app;
