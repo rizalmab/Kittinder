@@ -1,14 +1,21 @@
 // import "./App.css";
-import DatingCards from "./components/DatingCards";
-import Header from "./components/Header";
-import SwipeButtons from "./components/SwipeButtons";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import HomePage from "./components/HomePage/HomePage";
 
 function App() {
   return (
     <div className="App text-white">
-      <Header />
-      <DatingCards />
-      <SwipeButtons />
+      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* <Route path="" element={<LikedPage />} />
+          <Route path="" element={<LoginPage />} />
+          <Route path="" element={<SignupPage />} />
+          <Route path="" element={<MyProfile />} /> */}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
