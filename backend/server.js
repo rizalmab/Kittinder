@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const { body } = require("express-validator");
 
 // import Routes middleware
 const catsController = require("./controllers/catsController");
