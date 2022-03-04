@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   // name: { type: String, required: true },
-  status: { type: String, required: true },
+  status: { type: String, default: "New" },
   likedCats: [
     {
       catId: { type: Schema.Types.ObjectId, ref: "Cat" },

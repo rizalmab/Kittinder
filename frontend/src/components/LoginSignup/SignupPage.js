@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import axios from "axios";
 
 const SignupPage = () => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleSubmit = () => {
+    console.log("user", user);
+    axios
+      .post("http://localhost:8001/api/users/signup", user)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -40,6 +56,10 @@ const SignupPage = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  onChange={(e) => {
+                    setUser({ ...user, username: e.target.value });
+                    // console.log("user", user);
+                  }}
                 />
               </div>
               <div>
@@ -54,12 +74,16 @@ const SignupPage = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  onChange={(e) => {
+                    setUser({ ...user, password: e.target.value });
+                    // console.log("user", user);
+                  }}
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
@@ -72,15 +96,15 @@ const SignupPage = () => {
                 >
                   Remember me
                 </label>
-              </div>
+              </div> */}
 
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   Forgot your password?
-                </a>
+                </a> */}
               </div>
             </div>
 
@@ -88,6 +112,7 @@ const SignupPage = () => {
               <button
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={() => handleSubmit()}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon
@@ -95,17 +120,8 @@ const SignupPage = () => {
                     aria-hidden="true"
                   />
                 </span>
-                Log in
+                Submit
               </button>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                Not a member? Sign up{" "}
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  here
-                </a>
-              </p>
             </div>
           </form>
         </div>
