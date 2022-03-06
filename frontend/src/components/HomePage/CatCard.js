@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatingCard from "react-tinder-card";
-import axios from "./axios";
+import axios from "../axios";
 
 // const cardContent = "w-full h-full";
 
@@ -9,7 +9,7 @@ const CatCard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/cards");
+      const response = await axios.get("/api/cats");
       // console.log("response", response.data);
       setCats(response?.data);
     };

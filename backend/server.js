@@ -3,10 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const { body } = require("express-validator");
 
 // import Routes middleware
-const catsController = require("./controllers/catsController");
-const userController = require("./controllers/userController");
+const catsController = require("./routes/cats");
+const userController = require("./routes/user");
 
 // App config
 const app = express();
