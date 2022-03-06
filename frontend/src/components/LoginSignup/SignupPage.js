@@ -8,10 +8,16 @@ const SignupPage = () => {
     password: "",
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     console.log("user", user);
-    axios
-      .post("http://localhost:8001/api/users/signup", user)
+    e.preventDefault();
+    return axios
+      .post("/api/users/signup", user, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      })
       .then((res) => {
         console.log(res);
       })

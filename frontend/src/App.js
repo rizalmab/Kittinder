@@ -4,19 +4,22 @@ import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./components/HomePage/HomePage";
 import LoginPage from "./components/LoginSignup/LoginPage";
 import SignupPage from "./components/LoginSignup/SignupPage";
+import LikedPage from "./components/Liked/LikedPage";
+import MyProfile from "./components/MyProfile/MyProfile";
+import AdvancedSwipe from "./components/HomePage/AdvancedSwipe";
 
 function App() {
   return (
     <div className="App text-white">
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          {/* <Route path="/" element={<AdvancedSwipe />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          {/* <Route path="" element={<LikedPage />} />
-          <Route path="" element={<SignupPage />} />
-          <Route path="" element={<MyProfile />} /> */}
+          <Route path="/liked" element={<LikedPage />} />
+          <Route path="/my-profile" element={<MyProfile />} />
         </Routes>
       </BrowserRouter>
     </div>
