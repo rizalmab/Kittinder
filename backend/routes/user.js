@@ -21,41 +21,51 @@ router.get("/", (req, res) => {
   res.status(200).send("users route");
 });
 
-// "/api/users/new" - show signup page
-// get request
-
 // "/api/users/signup" - create new user
-// post request, redirect to another page
-router.post(
-  "/signup",
-  // validate email and password
-  // body("username").isEmail(),
-  // body("password").isLength({ min: 5 }),
-  // check for errors and return it as json if there are
-  async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
-    // // hash the password and create a new user
-    // const hashedPassword = bcrypt.hash(req.body.password, 10);
-    try {
-      console.log("req.body", req.body);
-      // const newUser = await User.create({
-      //   username: req.body.username,
-      //   password: hashedPassword,
-      //   // status: req.body.status,
-      // });
-      // res.status(200).json({
-      //   message: "New user created",
-      //   data: newUser,
-      // });
-    } catch (err) {
-      console.log("Error ", err);
-    }
-    // .redirect("/");
+router.post("/signup", async (req, res) => {
+  try {
+    let { email, password, passwordCheck, displayName } = req.body;
+    //! validate
+    // check fields are filled
+    if (!email || !password || !passwordCheck)
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    //! check password length
+    if (password.length < 5)
+      return res
+        .status(400)
+        .json({ msg: "The password needs to be at least 5 characters long." });
+    //! check confirm password
+    if (password !== passwordCheck)
+      return res
+        .status(400)
+        .json({ msg: "Enter the same password twice for verification." });
+    //! check if have existing user
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser)
+      return res
+        .status(400)
+        .json({ msg: "An account with this email already exists." });
+    //! if no displayName, make the email the display name
+    if (!displayName) displayName = email;
+    //! Hash the password with salt
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+    //! Create a new user (with hashed password) in database
+    const newUser = new User({
+      email,
+      password: passwordHash,
+      displayName,
+    });
+    //! Save the new user details in database
+    const savedUser = await newUser.save();
+    //! Send response (savedUser object)
+    res.json({ message: "New user successfully created", data: savedUser });
+    console.log("New user successfully created");
+    //! Catch error
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-);
+});
 
 // "/api/users/tokenIsValid"
 router.post("/tokenIsValid", async (req, res) => {
@@ -71,5 +81,8 @@ router.post("/tokenIsValid", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// "/api/users/login"
+router.post("")
 
 module.exports = router;

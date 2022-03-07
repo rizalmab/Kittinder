@@ -19,10 +19,10 @@ const SignupPage = () => {
     try {
       const newUser = { email, password, passwordCheck, displayName };
       //! send post request to REGISTER
-      await axios.post("http://localhost:5000/users/register", newUser);
+      await axios.post("http://localhost:8001/api/users/signup", newUser);
       //! send post request to LOGIN
       const loginResponse = await axios.post(
-        "http://localhost:5000/users/login",
+        "http://localhost:8001/api/users/login",
         {
           email,
           password,
@@ -102,6 +102,21 @@ const SignupPage = () => {
                   placeholder="Confirm Password"
                   onChange={(e) => {
                     setPasswordCheck(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="set-display-name" className="sr-only">
+                  Confirm Password
+                </label>
+                <input
+                  id="set-display-name"
+                  name="set-display-name"
+                  type="text"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Display name"
+                  onChange={(e) => {
+                    setDisplayName(e.target.value);
                   }}
                 />
               </div>

@@ -1,15 +1,15 @@
 const users = [
   {
-    username: "User1",
+    email: "User1@gmail.com",
     password: "12345",
-    // status: "logged in",
+    displayName: "User 1",
     likedCats: [],
     dislikedCats: [],
   },
   {
-    username: "User2",
+    email: "User2@gmail.com",
     password: "12345",
-    // status: "logged in",
+    displayName: "User 2",
     likedCats: [],
     dislikedCats: [],
   },
