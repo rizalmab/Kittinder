@@ -4,6 +4,12 @@ const userSeed = require("../models/seedData/usersSeed");
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
+const path = require("path");
+dotenv.config({ path: path.resolve("routes", "../../.env") });
+
+// console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
+// console.log("process.env.PORT", process.env.PORT);
 
 // "/api/users/seed" - create seed users
 router.get("/seed", async (req, res) => {
@@ -21,41 +27,40 @@ router.get("/", (req, res) => {
   res.status(200).send("users route");
 });
 
-// "/api/users/new" - show signup page
-// get request
-
 // "/api/users/signup" - create new user
-// post request, redirect to another page
-router.post(
-  "/signup",
-  // validate email and password
-  // body("username").isEmail(),
-  // body("password").isLength({ min: 5 }),
-  // check for errors and return it as json if there are
-  async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
-    // // hash the password and create a new user
-    // const hashedPassword = bcrypt.hash(req.body.password, 10);
-    try {
-      console.log("req.body", req.body);
-      // const newUser = await User.create({
-      //   username: req.body.username,
-      //   password: hashedPassword,
-      //   // status: req.body.status,
-      // });
-      // res.status(200).json({
-      //   message: "New user created",
-      //   data: newUser,
-      // });
-    } catch (err) {
-      console.log("Error ", err);
-    }
-    // .redirect("/");
+router.post("/signup", async (req, res) => {
+  try {
+    let { email, password, passwordCheck, displayName } = req.body;
+    if (!email || !password || !passwordCheck)
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    if (password.length < 5)
+      return res
+        .status(400)
+        .json({ msg: "The password needs to be at least 5 characters long." });
+    if (password !== passwordCheck)
+      return res
+        .status(400)
+        .json({ msg: "Enter the same password twice for verification." });
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser)
+      return res
+        .status(400)
+        .json({ msg: "An account with this email already exists." });
+    if (!displayName) displayName = email;
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+    const newUser = new User({
+      email,
+      password: passwordHash,
+      displayName,
+    });
+    const savedUser = await newUser.save();
+    res.json({ message: "New user successfully created", data: savedUser });
+    console.log("New user successfully created");
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-);
+});
 
 // "/api/users/tokenIsValid"
 router.post("/tokenIsValid", async (req, res) => {
@@ -67,6 +72,40 @@ router.post("/tokenIsValid", async (req, res) => {
     const user = await User.findById(verified.id);
     if (!user) return res.json(false);
     return res.json(true);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// "/api/users/login"
+router.post("/login", async (req, res) => {
+  try {
+    //! extract email and password from request body
+    const { email, password } = req.body;
+    //! check all fields are filled up
+    if (!email || !password)
+      return res.status(400).json({ msg: "Not all fields have been entered." });
+    //! check whether user is registered
+    const user = await User.findOne({ email: email });
+    if (!user)
+      return res
+        .status(400)
+        .json({ msg: "No account with this email has been registered." });
+    //! check password from request body against hashed password from database (of identified user)
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
+    //! Create a token if the login credentials are found to match
+    // sign method is used to create a token. The first parameter is the payload and the second parameter is the secret key.
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    //! Send response with token, user, display name
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        displayName: user.displayName,
+      },
+    });
+    //! Catch error
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
