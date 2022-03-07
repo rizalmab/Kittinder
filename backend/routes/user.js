@@ -5,6 +5,7 @@ const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 const path = require("path");
 dotenv.config({ path: path.resolve("routes", "../../.env") });
 
@@ -20,11 +21,6 @@ router.get("/seed", async (req, res) => {
     message: "users seeded successfully",
     data: seededData,
   });
-});
-
-// "/api/users" - retrieve all users
-router.get("/", (req, res) => {
-  res.status(200).send("users route");
 });
 
 // "/api/users/signup" - create new user
@@ -80,24 +76,29 @@ router.post("/tokenIsValid", async (req, res) => {
 // "/api/users/login"
 router.post("/login", async (req, res) => {
   try {
-    //! extract email and password from request body
     const { email, password } = req.body;
-    //! check all fields are filled up
-    if (!email || !password)
+    console.log("email", email);
+    console.log("password", password);
+    if (!email || !password) {
+      console.log("Not all fields have been entered.");
       return res.status(400).json({ msg: "Not all fields have been entered." });
-    //! check whether user is registered
+    }
     const user = await User.findOne({ email: email });
-    if (!user)
+    if (!user) {
+      console.log("No account with this email has been registered.");
       return res
         .status(400)
         .json({ msg: "No account with this email has been registered." });
-    //! check password from request body against hashed password from database (of identified user)
+    }
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
-    //! Create a token if the login credentials are found to match
-    // sign method is used to create a token. The first parameter is the payload and the second parameter is the secret key.
+    if (!isMatch) {
+      console.log("Invalid credentials.");
+      return res.status(400).json({ msg: "Invalid credentials." });
+    }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    //! Send response with token, user, display name
+    console.log("token", token);
+    console.log("id", user._id);
+    console.log("user.displayName", user.displayName);
     res.json({
       token,
       user: {
@@ -105,9 +106,9 @@ router.post("/login", async (req, res) => {
         displayName: user.displayName,
       },
     });
-    //! Catch error
   } catch (err) {
     res.status(500).json({ error: err.message });
+    console.log("Error: Did not manage to login");
   }
 });
 

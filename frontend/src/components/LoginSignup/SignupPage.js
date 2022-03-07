@@ -34,12 +34,14 @@ const SignupPage = () => {
         token: loginResponse.data.token,
         user: loginResponse.data.user,
       });
+      console.log("loginResponse", loginResponse);
       //! save the token in local storage
       localStorage.setItem("auth-token", loginResponse.data.token);
       navigate("/", { replace: true });
       //! catch error
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
+      console.log("Error");
     }
   };
 

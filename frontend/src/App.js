@@ -1,12 +1,7 @@
 // import "./App.css";
 import { useEffect, useState } from "react";
 import UserContext from "./components/context/context";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useInRouterContext,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./components/HomePage/HomePage";

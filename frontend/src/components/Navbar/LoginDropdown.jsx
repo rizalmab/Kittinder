@@ -10,11 +10,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const DropdownMenu = () => {
+const LoginDropdown = () => {
   const values = useContext(UserContext);
-  console.log("values", values);
-  console.log("values.userData.user", values.userData.user);
-  console.log("values.userData.user", Boolean(values.userData.user));
   const navigate = useNavigate();
 
   return (
@@ -37,77 +34,32 @@ const DropdownMenu = () => {
       >
         <Menu.Items className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {/* <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="#"
-                  className="bg-gray-100 text-gray-900 block px-4 py-2 text-sm text-blue-700"
-                >
-                  Welcome User!
-                </Link>
-              )}
-            </Menu.Item> */}
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to="/"
+                  to="/login"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Find Cats
+                  Log in
                 </Link>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  to="/liked"
+                  to="/signup"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Liked Cats
+                  Sign up
                 </Link>
               )}
             </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/my-profile"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  My Profile
-                </Link>
-              )}
-            </Menu.Item>
-            <form method="POST" action="#">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    type="submit"
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block w-full text-left px-4 py-2 text-sm"
-                    )}
-                    onClick={() => {
-                      values.setUserData({
-                        token: undefined,
-                        user: undefined,
-                      });
-                      navigate("/");
-                    }}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-            </form>
           </div>
         </Menu.Items>
       </Transition>
@@ -115,4 +67,4 @@ const DropdownMenu = () => {
   );
 };
 
-export default DropdownMenu;
+export default LoginDropdown;
