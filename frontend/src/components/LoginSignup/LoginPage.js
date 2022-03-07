@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [error, setError] = useState();
   const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {

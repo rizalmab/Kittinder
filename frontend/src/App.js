@@ -1,4 +1,3 @@
-// import "./App.css";
 import { useEffect, useState } from "react";
 import UserContext from "./components/context/context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -51,7 +50,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            {/* <Route path="/" element={<AdvancedSwipe />} /> */}
+            <Route path="/advanced" element={<AdvancedSwipe />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/liked" element={<LikedPage />} />
