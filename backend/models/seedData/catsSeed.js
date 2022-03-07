@@ -1,16 +1,37 @@
 const catsSeed = [
   {
-    name: "Tabbie 1",
+    name: "Tabbie",
     imgUrl: ["https://i.imgur.com/Ad76TQv.jpg"],
     gender: "male",
     age: 9,
     breed: "tabbie",
   },
   {
-    name: "Tabbie 2",
-    imgUrl: ["https://i.imgur.com/K9VUOYo.jpg"],
-    gender: "male",
+    name: "Mindy",
+    imgUrl: ["https://i.imgur.com/vO5x9w5.jpg"],
+    gender: "female",
     age: 9,
+    breed: "tabbie",
+  },
+  {
+    name: "Romeo",
+    imgUrl: ["https://i.imgur.com/8AnHquv.jpg"],
+    gender: "male",
+    age: 7,
+    breed: "tabbie",
+  },
+  {
+    name: "Tommy",
+    imgUrl: ["https://i.imgur.com/HKp8GDQ.jpg"],
+    gender: "male",
+    age: 5,
+    breed: "tabbie",
+  },
+  {
+    name: "March",
+    imgUrl: ["https://i.imgur.com/GPR1GD8.jpg"],
+    gender: "female",
+    age: 11,
     breed: "tabbie",
   },
 ];

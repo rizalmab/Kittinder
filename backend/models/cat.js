@@ -9,7 +9,7 @@ const catSchema = new Schema({
   age: { type: Number },
   breed: { type: String },
   user: {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
   },
 });
 

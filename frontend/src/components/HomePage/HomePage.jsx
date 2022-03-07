@@ -23,8 +23,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/cats");
-      console.log("response", response.data);
-      setCatsArr(response?.data);
+      console.log("response", response.data.data);
+      setCatsArr(response?.data?.data);
     };
     fetchData();
   }, []);
@@ -34,7 +34,7 @@ const HomePage = () => {
       Array(catsArr?.length)
         .fill(0)
         .map((i) => React.createRef()),
-    []
+    [catsArr]
   );
   console.log("childRefs", childRefs);
 
@@ -107,11 +107,11 @@ const HomePage = () => {
     <>
       <div className="datingCards">
         <div className="container flex justify-center mt-10">
-          {catsArr.map((cat, index) => {
+          {catsArr?.map((cat, index) => {
             return (
               <DatingCard
                 className="swipe absolute"
-                key={cat.name}
+                key={index}
                 preventSwipe={["up", "down"]}
                 // onSwipe={onSwipe}
                 // onCardLeftScreen={() => onCardLeftScreen(cat.name)}
