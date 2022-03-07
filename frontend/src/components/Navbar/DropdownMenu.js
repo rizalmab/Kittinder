@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 // import PersonIcon from "@material-ui/icons/Person";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -13,6 +13,9 @@ function classNames(...classes) {
 const DropdownMenu = () => {
   const values = useContext(UserContext);
   console.log("values", values);
+  console.log("values.userData.user", Boolean(values.userData.user));
+  const navigate = useNavigate();
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -91,6 +94,13 @@ const DropdownMenu = () => {
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block w-full text-left px-4 py-2 text-sm"
                     )}
+                    onClick={() => {
+                      values.setUserData({
+                        token: undefined,
+                        user: undefined,
+                      });
+                      navigate("/");
+                    }}
                   >
                     Sign out
                   </button>
@@ -101,11 +111,6 @@ const DropdownMenu = () => {
         </Menu.Items>
       </Transition>
     </Menu>
-    // <div>
-    //   <IconButton>
-    //     <PersonIcon fontSize="large" className="header_icon" />
-    //   </IconButton>
-    // </div>
   );
 };
 
