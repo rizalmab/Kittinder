@@ -5,14 +5,18 @@ const catData = require("../models/seedData/catsSeed");
 
 // SEED "api/cats/seed"
 app.get("/seed", async (req, res) => {
-  await Cat.deleteMany({});
-  const catsSeed = await Cat.create(catData);
-  console.log("catData", catData);
-  console.log("Cats seeded!");
-  res.status(200).json({
-    message: "Cats seed successful",
-    data: catsSeed,
-  });
+  try {
+    await Cat.deleteMany({});
+    const catsSeed = await Cat.create(catData);
+    console.log("catData", catData);
+    console.log("Cats seeded!");
+    res.status(200).json({
+      message: "Cats seed successful",
+      data: catsSeed,
+    });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
 });
 
 // POST "api/cats"
