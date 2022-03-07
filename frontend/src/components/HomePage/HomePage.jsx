@@ -13,6 +13,8 @@ import IconButton from "@material-ui/core/IconButton";
 const HomePage = () => {
   // used for outOfFrame closure
   const [catsArr, setCatsArr] = useState([]);
+  const [likedCatsArr, setLikedCatsArr] = useState([]);
+  const [dislikedCatsArr, setDislikedCatsArr] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +43,14 @@ const HomePage = () => {
     console.log("Favourite button clicked");
   };
 
+  const onSwipe = (direction) => {
+    console.log("You swiped: " + direction);
+  };
+
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + " left the screen");
+  };
+
   return (
     <>
       <div className="datingCards">
@@ -51,6 +61,8 @@ const HomePage = () => {
                 className="swipe absolute"
                 key={cat.name}
                 preventSwipe={["up", "down"]}
+                onSwipe={onSwipe}
+                onCardLeftScreen={() => onCardLeftScreen("fooBar")}
               >
                 <div
                   style={{ backgroundImage: `url(${cat.imgUrl})` }}
