@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import DatingCard from "react-tinder-card";
 import axios from "../axios";
 
-// const cardContent = "w-full h-full";
-
 const CatCard = () => {
   const [cats, setCats] = useState([]);
 
@@ -28,7 +26,7 @@ const CatCard = () => {
     <div className="datingCards">
       <div className="container flex justify-center mt-10">
         {cats.map((cat) => {
-          return (
+          return ( 
             <DatingCard
               className="absolute"
               key={cat.name}

@@ -28,14 +28,13 @@ app.post("/", (req, res) => {
 });
 
 // GET "api/cats"
-app.get("/", (req, res) => {
-  Cat.find((err, data) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send(data);
-    }
-  });
+app.get("/", async (req, res) => {
+  try {
+    const allCats = await Cat.find();
+    res.status(200).json({ message: "Found all cats", data: allCats });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
 });
 
 module.exports = app;

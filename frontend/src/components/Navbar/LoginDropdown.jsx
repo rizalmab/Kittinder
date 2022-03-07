@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 // import PersonIcon from "@material-ui/icons/Person";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -12,7 +12,6 @@ function classNames(...classes) {
 
 const LoginDropdown = () => {
   const values = useContext(UserContext);
-  const navigate = useNavigate();
 
   return (
     <Menu as="div" className="relative inline-block text-left">
