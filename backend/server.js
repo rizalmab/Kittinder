@@ -39,3 +39,6 @@ mongoose.connection.once("open", () => {
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+// console.log("JWT_SECRET", process.env.JWT_SECRET);
+// console.log("process.env.PORT", process.env.PORT);

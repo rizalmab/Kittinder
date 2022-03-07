@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import UserContext from "../context/context";
+import ErrorNotice from "../misc/ErrorNotice";
 
 const SignupPage = () => {
   const [email, setEmail] = useState();
@@ -35,7 +36,7 @@ const SignupPage = () => {
       });
       //! save the token in local storage
       localStorage.setItem("auth-token", loginResponse.data.token);
-      navigate("/");
+      navigate("/", { replace: true });
       //! catch error
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
@@ -50,6 +51,12 @@ const SignupPage = () => {
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign up
             </h2>
+            {error && (
+              <ErrorNotice
+                message={error}
+                clearError={() => setError(undefined)}
+              />
+            )}
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
@@ -62,7 +69,6 @@ const SignupPage = () => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
@@ -79,7 +85,6 @@ const SignupPage = () => {
                   id="password"
                   name="password"
                   type="password"
-                  // autoComplete="current-password"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
@@ -96,7 +101,6 @@ const SignupPage = () => {
                   id="confirm-password"
                   name="confirm-password"
                   type="password"
-                  autoComplete="current-password"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Confirm Password"
