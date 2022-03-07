@@ -5,6 +5,7 @@ import DropdownMenu from "./DropdownMenu";
 import { useContext } from "react";
 import UserContext from "../context/context";
 import LoginDropdown from "./LoginDropdown";
+import logo from "../../images/Cat.png";
 
 const Navbar = () => {
   const contextNavbar = useContext(UserContext);
@@ -14,7 +15,7 @@ const Navbar = () => {
       {contextNavbar.userData.user ? <DropdownMenu /> : <LoginDropdown />}
       <img
         className="header_logo object-contain h-14"
-        src="logo192.png"
+        src={logo}
         alt="header"
       />
       <IconButton>

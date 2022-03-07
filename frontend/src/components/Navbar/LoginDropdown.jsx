@@ -34,16 +34,6 @@ const LoginDropdown = () => {
       >
         <Menu.Items className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            {/* <Menu.Item>
-          {({ active }) => (
-            <Link
-              to="#"
-              className="bg-gray-100 text-gray-900 block px-4 py-2 text-sm text-blue-700"
-            >
-              Welcome User!
-            </Link>
-          )}
-        </Menu.Item> */}
             <Menu.Item>
               {({ active }) => (
                 <Link
@@ -53,7 +43,7 @@ const LoginDropdown = () => {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  Log In
+                  Log in
                 </Link>
               )}
             </Menu.Item>
