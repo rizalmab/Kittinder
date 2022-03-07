@@ -40,7 +40,7 @@ router.post(
     // // hash the password and create a new user
     // const hashedPassword = bcrypt.hash(req.body.password, 10);
     try {
-      console.log("req.body", req.body)
+      console.log("req.body", req.body);
       // const newUser = await User.create({
       //   username: req.body.username,
       //   password: hashedPassword,
@@ -57,22 +57,19 @@ router.post(
   }
 );
 
-// router.post("/Register",(req,res)=>{
-//   console.log(req.body)
-//   const {name,email,password} =req.body;
-//   User.findOne({email:email},(err,user)=>{
-//       if(user){
-//           res.send({message:"user already exist"})
-//       }else {
-//           const user = new User({name,email,password})
-//           user.save(err=>{
-//               if(err){
-//                   res.send(err)
-//               }else{
-//                   res.send({message:"sucessfull"})
-//               }
-//           })
-//       }
-//   })
+// "/api/users/tokenIsValid"
+router.post("/tokenIsValid", async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token) return res.json(false);
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) return res.json(false);
+    const user = await User.findById(verified.id);
+    if (!user) return res.json(false);
+    return res.json(true);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
