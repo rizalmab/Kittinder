@@ -23,7 +23,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/cats");
-      console.log("response", response.data.data);
+      // console.log("response", response.data.data);
       setCatsArr(response?.data?.data);
       setCurrentIndex(response?.data?.data.length - 1);
     };
@@ -37,7 +37,7 @@ const HomePage = () => {
         .map((i) => React.createRef()),
     [catsArr]
   );
-  console.log("childRefs", childRefs);
+  // console.log("childRefs", childRefs);
 
   //! updates the current index and currentIndexRef
   const updateCurrentIndex = (val) => {
@@ -65,7 +65,6 @@ const HomePage = () => {
   };
 
   const swipe = async (dir) => {
-    console.log("SWIPED!");
     console.log("canSwipe", canSwipe);
     console.log("currentIndex", currentIndex);
     if (canSwipe && currentIndex < catsArr.length) {

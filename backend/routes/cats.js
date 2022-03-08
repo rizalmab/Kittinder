@@ -34,6 +34,7 @@ router.post("/", (req, res) => {
 // GET "api/cats"
 router.get("/", async (req, res) => {
   try {
+    // const allCats = await Cat.find({ name: { $not: { $eq: "Kitty" } } });
     const allCats = await Cat.find();
     res.status(200).json({ message: "Found all cats", data: allCats });
   } catch (err) {
@@ -45,8 +46,10 @@ router.get("/", async (req, res) => {
 router.post("/new", async (req, res) => {
   try {
     console.log("new cat created");
-    console.log("req.body: ", req.body);
-    res.status(200).json({ message: "New cat added to database", data: null });
+    const newCat = await Cat.create(req.body);
+    res
+      .status(200)
+      .json({ message: "New cat added to database", data: newCat });
   } catch (err) {
     console.log("Error: ", err);
   }

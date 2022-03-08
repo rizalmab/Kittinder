@@ -9,6 +9,7 @@ import SignupPage from "./components/LoginSignup/SignupPage";
 import LikedPage from "./components/Liked/LikedPage";
 import MyProfile from "./components/MyProfile/MyProfile";
 import AdvancedSwipe from "./components/HomePage/AdvancedSwipe";
+import CreatedProfile from "./components/MyProfile/CreatedProfile";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -58,6 +59,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/liked" element={<LikedPage />} />
             <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="created-profile" element={<CreatedProfile />} />
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>

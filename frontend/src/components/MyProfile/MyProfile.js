@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import RedAsterisk from "../misc/RedAsterisk";
 import axios from "axios";
+import UserContext from "../context/context";
+import CreatedProfile from "./CreatedProfile";
 
 const MyProfile = () => {
   const [catName, setCatName] = useState("");
@@ -8,6 +10,12 @@ const MyProfile = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState(undefined);
   const [breed, setBreed] = useState(undefined);
+  const [profileMade, setProfileMade] = useState(false);
+  const [createdCat, setCreatedCat] = useState({});
+
+  const userDetails = useContext(UserContext);
+  // console.log("userId", userDetails.userData.user.id);
+  const userId = userDetails.userData.user.id;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,18 +23,26 @@ const MyProfile = () => {
     // make a post request
     const createProfile = async () => {
       console.log("create profile");
-      const newCat = {
-        name: catName,
-        imgUrl: imgUrl,
-        gender: gender,
-        age: age,
-        breed: breed,
-      };
-      const response = await axios.post(
-        "http://localhost:8001/api/cats/new",
-        newCat
-      );
-      console.log("response", response);
+      try {
+        const newCat = {
+          name: catName,
+          imgUrl: imgUrl,
+          gender: gender,
+          age: age,
+          breed: breed,
+          user: { userId: userId },
+        };
+        const response = await axios.post(
+          "http://localhost:8001/api/cats/new",
+          newCat
+        );
+        setProfileMade(true);
+        setCreatedCat(newCat);
+        console.log("response", response);
+        console.log("createdCat", createdCat);
+      } catch (err) {
+        console.log("Error: ", err);
+      }
     };
     createProfile();
   };
@@ -38,7 +54,9 @@ const MyProfile = () => {
 
   console.log(catName, imgUrl, gender, age, breed);
 
-  return (
+  return profileMade ? (
+    <CreatedProfile createdCat={createdCat} />
+  ) : (
     <div className="text-black">
       <div className="main-container flex p-20 h-screen">
         <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid">
