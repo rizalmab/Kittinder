@@ -1,10 +1,10 @@
 const express = require("express");
 const Cat = require("../models/cat");
-const app = express.Router();
+const router = express.Router();
 const catData = require("../models/seedData/catsSeed");
 
 // SEED "api/cats/seed"
-app.get("/seed", async (req, res) => {
+router.get("/seed", async (req, res) => {
   try {
     await Cat.deleteMany({});
     const catsSeed = await Cat.create(catData);
@@ -20,7 +20,7 @@ app.get("/seed", async (req, res) => {
 });
 
 // POST "api/cats"
-app.post("/", (req, res) => {
+router.post("/", (req, res) => {
   const dbCard = req.body;
   Cat.create(dbCard, (err, data) => {
     if (err) {
@@ -32,7 +32,7 @@ app.post("/", (req, res) => {
 });
 
 // GET "api/cats"
-app.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const allCats = await Cat.find();
     res.status(200).json({ message: "Found all cats", data: allCats });
@@ -41,4 +41,15 @@ app.get("/", async (req, res) => {
   }
 });
 
-module.exports = app;
+// POST "/api/cats/new" - create new cat
+router.post("/new", async (req, res) => {
+  try {
+    console.log("new cat created");
+    console.log("req.body: ", req.body);
+    res.status(200).json({ message: "New cat added to database", data: null });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+});
+
+module.exports = router;
