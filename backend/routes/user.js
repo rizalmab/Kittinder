@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 dotenv.config({ path: path.resolve("routes", "../../.env") });
+const auth = require("../middleware/auth");
 
 // console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
 // console.log("process.env.PORT", process.env.PORT);
