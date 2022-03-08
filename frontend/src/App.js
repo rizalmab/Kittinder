@@ -19,6 +19,7 @@ function App() {
     const checkLoggedIn = async () => {
       // search for token
       let token = localStorage.getItem("auth-token");
+      console.log("token", token);
       // if no token, set token to ""
       if (token === null) {
         localStorage.setItem("auth-token", "");
@@ -30,10 +31,12 @@ function App() {
         null,
         { headers: { "x-auth-token": token } }
       );
+      console.log("tokenResponse", tokenResponse);
       if (tokenResponse.data) {
         const userRes = await axios.get("http://localhost:8001/api/users/", {
           headers: { "x-auth-token": token },
         });
+        console.log("userRes", userRes);
         setUserData({
           token,
           user: userRes.data,
