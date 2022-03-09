@@ -27,14 +27,12 @@ function App() {
         token = "";
       }
       // get response for token
-      const tokenResponse = await axios.post(
-        "http://localhost:8001/api/users/tokenIsValid",
-        null,
-        { headers: { "x-auth-token": token } }
-      );
+      const tokenResponse = await axios.post("/api/users/tokenIsValid", null, {
+        headers: { "x-auth-token": token },
+      });
       console.log("tokenResponse", tokenResponse);
       if (tokenResponse.data) {
-        const userRes = await axios.get("http://localhost:8001/api/users/", {
+        const userRes = await axios.get("/api/users/", {
           headers: { "x-auth-token": token },
         });
         console.log("userRes", userRes);

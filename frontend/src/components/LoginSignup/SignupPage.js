@@ -20,10 +20,10 @@ const SignupPage = () => {
     try {
       const newUser = { email, password, passwordCheck, displayName };
       //! send post request to REGISTER
-      await axios.post("http://localhost:8001/api/users/signup", newUser);
+      await axios.post("/api/users/signup", newUser);
       //! send post request to LOGIN
       const loginResponse = await axios.post(
-        "http://localhost:8001/api/users/login",
+        "/api/users/login",
         {
           email,
           password,

@@ -34,10 +34,7 @@ const MyProfile = () => {
           breed: breed,
           user: { userId: userId },
         };
-        const response = await axios.post(
-          "http://localhost:8001/api/cats/new",
-          newCat
-        );
+        const response = await axios.post("/api/cats/new", newCat);
         // setProfileMade(true);
         profileMadeRef.current = true;
         setCreatedCat(newCat);
