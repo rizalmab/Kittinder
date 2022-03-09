@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { body } = require("express-validator");
+const path = require("path");
 
 // import Routes middleware
 const catsController = require("./routes/cats");
@@ -26,6 +27,12 @@ app.use("/api/users", userController);
 // API endpoints
 app.get("/", (req, res) => {
   res.status(200).send("API working!");
+});
+
+//for build
+// for all routes that aren't API routes, heroku will serve the static page/frontend/index.html from the build folder
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
 // DB Config
