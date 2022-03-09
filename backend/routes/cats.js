@@ -55,4 +55,14 @@ router.post("/new", async (req, res) => {
   }
 });
 
+// DELETE "/api/cats/delete" - delete cat
+router.delete("/delete", async (req, res) => {
+  try {
+    // await Cat.findOneAndDelete({_id: });
+    res.status(200).json({ message: "successfully deleted one cat" });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+});
+
 module.exports = router;

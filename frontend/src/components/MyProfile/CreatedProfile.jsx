@@ -1,10 +1,14 @@
 import React from "react";
+import axios from "axios";
 
 const CreatedProfile = (props) => {
-  // incl edit button
-  // incl delete button
-  // show cat picture and all details
-  console.log("props", props);
+    console.log("props", props);
+
+  const handleDelete = async () => {
+    // axios delete call
+    const response = await axios.delete("http://localhost:8001/api/cats/delete", {data: {id: props.CreatedProfile.id}});
+    // navigate to home page
+  };
 
   return (
     <div className="text-black">
@@ -31,7 +35,10 @@ const CreatedProfile = (props) => {
             <button className="bg-blue-700 text-white rounded-md px-3 py-1 m-3">
               Edit
             </button>
-            <button className="bg-red-700 text-white rounded-md px-3 py-1 m-3">
+            <button
+              className="bg-red-700 text-white rounded-md px-3 py-1 m-3"
+              onClick={() => handleDelete()}
+            >
               Delete
             </button>
           </div>
