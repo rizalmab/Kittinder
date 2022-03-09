@@ -42,6 +42,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET "/api/cats/show/:id"
+router.get("/show/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const oneCat = await Cat.findById(id);
+    res.status(200).json({ message: "Found one cat", data: oneCat });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+});
+
 // POST "/api/cats/new" - create new cat
 router.post("/new", async (req, res) => {
   try {
@@ -55,10 +66,12 @@ router.post("/new", async (req, res) => {
   }
 });
 
-// DELETE "/api/cats/delete" - delete cat
-router.delete("/delete", async (req, res) => {
+// DELETE "/api/cats/:id" - delete cat
+router.delete("/:id", async (req, res) => {
   try {
-    // await Cat.findOneAndDelete({_id: });
+    const { id } = req.params;
+    await Cat.findByIdAndDelete(id);
+    console.log("One cat deleted");
     res.status(200).json({ message: "successfully deleted one cat" });
   } catch (err) {
     console.log("Error: ", err);
