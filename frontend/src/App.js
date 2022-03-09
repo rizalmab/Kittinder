@@ -59,7 +59,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/liked" element={<LikedPage />} />
             <Route path="/my-profile" element={<MyProfile />} />
-            <Route path="created-profile" element={<CreatedProfile />} />
+            <Route path="/created-profile/:id" element={<CreatedProfile />} />
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>

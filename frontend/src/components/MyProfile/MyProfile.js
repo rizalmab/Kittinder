@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import RedAsterisk from "../misc/RedAsterisk";
 import axios from "axios";
 import UserContext from "../context/context";
@@ -10,7 +10,9 @@ const MyProfile = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState(undefined);
   const [breed, setBreed] = useState(undefined);
-  const [profileMade, setProfileMade] = useState(false);
+  // const [profileMade, setProfileMade] = useState(false);
+  const profileMadeRef = useRef(false);
+  console.log("profileMadeRef", profileMadeRef.current);
   const [createdCat, setCreatedCat] = useState({});
 
   const userDetails = useContext(UserContext);
@@ -36,7 +38,8 @@ const MyProfile = () => {
           "http://localhost:8001/api/cats/new",
           newCat
         );
-        setProfileMade(true);
+        // setProfileMade(true);
+        profileMadeRef.current = true;
         setCreatedCat(newCat);
         console.log("response", response);
         console.log("createdCat", createdCat);
@@ -54,7 +57,7 @@ const MyProfile = () => {
 
   console.log(catName, imgUrl, gender, age, breed);
 
-  return profileMade ? (
+  return profileMadeRef.current ? (
     <CreatedProfile createdCat={createdCat} />
   ) : (
     <div className="text-black">
