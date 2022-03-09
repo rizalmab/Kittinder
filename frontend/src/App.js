@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App text-white">
+    <div className="App ">
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
           <Navbar />

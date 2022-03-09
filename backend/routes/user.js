@@ -123,4 +123,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// PUT "/api/users" - update User's likedCats/dislikedCats
+router.put("/", async (req, res) => {
+  try {
+    res
+      .status(200)
+      .json({
+        message: "updated likedCats/dislikedCats array for user",
+        data: null,
+      });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+});
+
 module.exports = router;

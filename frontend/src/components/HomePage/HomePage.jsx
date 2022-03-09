@@ -50,9 +50,17 @@ const HomePage = () => {
   const canSwipe = currentIndex >= 0;
 
   //! set last direction (for undo) and decrease current index (since one card swiped away)
-  const swiped = (direction, nameToDelete, index) => {
+  const swiped = (direction, nameToDelete, idToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    // console.log("arguments", direction, nameToDelete, idToDelete, index);
+    if (direction === "left") {
+      setDislikedCatsArr([...dislikedCatsArr, idToDelete]);
+    } else if (direction === "right") {
+      setLikedCatsArr([...likedCatsArr, idToDelete]);
+    }
+    console.log("dislikedCatsArr: ", dislikedCatsArr);
+    console.log("likedCatsArr: ", likedCatsArr);
   };
 
   const outOfFrame = (name, idx) => {
@@ -78,37 +86,21 @@ const HomePage = () => {
     const newIndex = currentIndex + 1;
     updateCurrentIndex(newIndex);
     await childRefs[newIndex].current.restoreCard();
+    // find the last direction
+    if (lastDirection === "left") {
+      // console.log("the last card was disliked");
+      dislikedCatsArr.pop();
+    } else if (lastDirection === "right") {
+      // console.log("the last card was liked");
+      likedCatsArr.pop();
+    }
+    console.log("dislikedCatsArr: ", dislikedCatsArr);
+    console.log("likedCatsArr: ", likedCatsArr);
   };
-
-  // const handleUndo = () => {
-  //   console.log("Undo button clicked");
-  // };
-
-  // const handleLike = () => {
-  //   console.log("Like button clicked");
-  //   // print out array of liked cats (their Ids)
-  //   // swipe the cat to the right
-  // };
-
-  // const handleDislike = () => {
-  //   console.log("Dislike button clicked");
-  // };
-
-  // const handleFavourite = () => {
-  //   console.log("Favourite button clicked");
-  // };
-
-  // const onSwipe = (direction) => {
-  //   console.log("You swiped: " + direction);
-  // };
-
-  // const onCardLeftScreen = (myIdentifier) => {
-  //   console.log(myIdentifier + " left the screen");
-  // };
 
   return (
     <>
-      <div className="datingCards">
+      <div className="datingCards container mx-auto flex justify-center">
         <div className="container flex justify-center mt-10">
           {catsArr?.map((cat, index) => {
             return (
@@ -116,11 +108,9 @@ const HomePage = () => {
                 className="swipe absolute"
                 key={index}
                 preventSwipe={["up", "down"]}
-                // onSwipe={onSwipe}
-                // onCardLeftScreen={() => onCardLeftScreen(cat.name)}
                 ref={childRefs[index]}
-                onSwipe={(dir) => swiped(dir, cat.name, index)}
-                onCardLeftScreen={() => outOfFrame(cat.name, index)}
+                onSwipe={(dir) => swiped(dir, cat.name, cat._id, index)}
+                onCardLeftScreen={() => outOfFrame(cat.name, cat._id, index)}
               >
                 <div
                   style={{ backgroundImage: `url(${cat.imgUrl})` }}
@@ -134,7 +124,7 @@ const HomePage = () => {
             );
           })}
         </div>
-        <div className="fixed flex w-full bg-white justify-evenly bottom-4">
+        <div className="fixed flex w-1/2 bg-white justify-evenly bottom-4 rounded-xl">
           <IconButton
             className="p-5 shadow-vxl"
             onClick={() => {
@@ -153,7 +143,7 @@ const HomePage = () => {
           </IconButton>
           <IconButton
             className="p-5 shadow-vxl"
-            onClick={() => {
+            onClick={(e) => {
               swipe("right");
             }}
           >
