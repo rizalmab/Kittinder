@@ -11,7 +11,7 @@ const Navbar = () => {
   const contextNavbar = useContext(UserContext);
   console.log("contextNavbar", contextNavbar);
   return (
-    <div className="container mx-auto flex items-center justify-between z-100 border-solid border-2 border-black">
+    <div className="flex items-center justify-between z-100  bg-[#E60965]">
       {contextNavbar.userData.user ? <DropdownMenu /> : <LoginDropdown />}
       <img
         className="header_logo object-contain h-14"

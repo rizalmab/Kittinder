@@ -61,10 +61,11 @@ const MyProfile = () => {
   return (
     <div className="text-black">
       <div className="main-container flex p-20 h-screen">
-        <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid">
-          Img uploader
+        <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid rounded-lg">
+          {/* Img uploader */}
+          <img alt="cat" src={imgUrl} />
         </div>
-        <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid">
+        <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid p-10 rounded-lg">
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
               <label>
@@ -74,6 +75,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 required
+                className="rounded-lg"
                 onChange={(e) => setCatName(e.target.value)}
               />
             </div>
@@ -83,7 +85,11 @@ const MyProfile = () => {
                 ImgUrl
                 <RedAsterisk />:
               </label>
-              <input type="text" onChange={(e) => setImgUrl(e.target.value)} />
+              <input
+                type="text"
+                className="rounded-lg"
+                onChange={(e) => setImgUrl(e.target.value)}
+              />
               {/* <button className="bg-red-600" onClick={() => getRandomCat()}>
                 Get random cat image
               </button> */}
@@ -97,6 +103,7 @@ const MyProfile = () => {
               <select
                 name="gender"
                 id="gender"
+                className="rounded-lg"
                 onChange={(e) => setGender(e.target.value)}
               >
                 <option disabled selected value>
@@ -110,12 +117,20 @@ const MyProfile = () => {
             <br />
             <div>
               <label>Age:</label>
-              <input type="number" onChange={(e) => setAge(e.target.value)} />
+              <input
+                type="number"
+                className="rounded-lg"
+                onChange={(e) => setAge(e.target.value)}
+              />
             </div>
             <br />
             <div>
               <label>Breed:</label>
-              <input type="text" onChange={(e) => setBreed(e.target.value)} />
+              <input
+                type="text"
+                className="rounded-lg"
+                onChange={(e) => setBreed(e.target.value)}
+              />
             </div>
             <br />
             <button

@@ -26,7 +26,7 @@ const SwipeButtons = () => {
   };
 
   return (
-    <div className="fixed flex w-full bg-white justify-evenly bottom-4">
+    <div className="fixed flex w-full bg-[#F94892] justify-evenly bottom-4">
       <IconButton className="p-5 shadow-vxl" onClick={() => handleUndo()}>
         <ReplayIcon className="text-orange-400" fontSize="large" />
       </IconButton>
