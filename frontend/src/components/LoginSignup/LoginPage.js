@@ -17,7 +17,7 @@ const LoginPage = () => {
     try {
       const loginUser = { email, password };
       const loginResponse = await axios.post(
-        "http://localhost:8001/api/users/login",
+        "/api/users/login",
         loginUser
       );
       setUserData({

@@ -2,11 +2,13 @@ import React from "react";
 import axios from "axios";
 
 const CreatedProfile = (props) => {
-    console.log("props", props);
+  console.log("props", props);
 
   const handleDelete = async () => {
     // axios delete call
-    const response = await axios.delete("http://localhost:8001/api/cats/delete", {data: {id: props.CreatedProfile.id}});
+    const response = await axios.delete("/api/cats/delete", {
+      data: { id: props.CreatedProfile.id },
+    });
     // navigate to home page
   };
 
