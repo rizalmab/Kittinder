@@ -12,9 +12,9 @@ function classNames(...classes) {
 
 const DropdownMenu = () => {
   const values = useContext(UserContext);
-  console.log("values", values);
-  console.log("values.userData.user", values.userData.user);
-  console.log("values.userData.user", Boolean(values.userData.user));
+  // console.log("values", values);
+  // console.log("values.userData.user", values.userData.user);
+  // console.log("values.userData.user", Boolean(values.userData.user));
   const navigate = useNavigate();
 
   return (

@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 dotenv.config({ path: path.resolve("routes", "../../.env") });
+const auth = require("../middleware/auth");
 
 // console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
 // console.log("process.env.PORT", process.env.PORT);
@@ -22,6 +23,16 @@ router.get("/seed", async (req, res) => {
     data: seededData,
   });
 });
+
+// "/api/users"
+router.get("/", auth, async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({
+    displayName: user.displayName,
+    id: user._id,
+  });
+});
+module.exports = router;
 
 // "/api/users/signup" - create new user
 router.post("/signup", async (req, res) => {
