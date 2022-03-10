@@ -1,7 +1,11 @@
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const path = require("path");
+dotenv.config({ path: path.resolve("routes", "../../.env") });
 
 // This is a middleware for validation
 // This middleware performs a validation check on the token, whether the token is valid or not and whether the user is logged in or not.
+console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
 
 const auth = (req, res, next) => {
   try {

@@ -5,7 +5,7 @@ import DropdownMenu from "./DropdownMenu";
 import { useContext } from "react";
 import UserContext from "../context/context";
 import LoginDropdown from "./LoginDropdown";
-import logo from "../../images/Cat.png";
+import logo from "../../images/Cat2.png";
 
 const Navbar = () => {
   const contextNavbar = useContext(UserContext);
