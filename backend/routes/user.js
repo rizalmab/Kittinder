@@ -32,7 +32,24 @@ router.get("/", auth, async (req, res) => {
     id: user._id,
   });
 });
-module.exports = router;
+
+// GET "/api/users/single/:id"
+router.get("/single/:id", async (req, res) => {
+  try {
+    // populate with liked cats
+    // send over array of liked cats in response
+    const { id } = req.params;
+    console.log("id", id);
+    const singleUser = await User.findById(id).populate("likedCats");
+    console.log("liked cats", singleUser.likedCats);
+    const likedCats = singleUser.likedCats;
+    res
+      .status(200)
+      .json({ message: "Found likedCats of single user", data: likedCats });
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+});
 
 // "/api/users/signup" - create new user
 router.post("/signup", async (req, res) => {
@@ -126,12 +143,17 @@ router.post("/login", async (req, res) => {
 // PUT "/api/users" - update User's likedCats/dislikedCats
 router.put("/", async (req, res) => {
   try {
-    res
-      .status(200)
-      .json({
-        message: "updated likedCats/dislikedCats array for user",
-        data: null,
-      });
+    const { likedCatsArr, dislikedCatsArr, userId } = req.body;
+    console.log(likedCatsArr, dislikedCatsArr, userId);
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { likedCats: likedCatsArr, dislikedCats: dislikedCatsArr } }
+    );
+    console.log("User's likedCats & dislikedCats fields updated");
+    res.status(200).json({
+      message: "updated likedCats/dislikedCats array for user",
+      data: updatedUser,
+    });
   } catch (err) {
     console.log("Error: ", err);
   }
