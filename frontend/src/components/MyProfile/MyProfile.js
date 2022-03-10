@@ -45,7 +45,7 @@ const MyProfile = () => {
         // console.log("profileMade", userDetails.profileMade);
         // console.log("response", response);
         // console.log("createdCat", createdCat);
-        userDetails.setProfileId(response.data.data._id)
+        userDetails.setProfileId(response.data.data._id);
         navigate(`/created-profile/${response.data.data._id}`);
       } catch (err) {
         console.log("Error: ", err);

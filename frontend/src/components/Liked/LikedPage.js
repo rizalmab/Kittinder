@@ -23,8 +23,8 @@ const LikedPage = () => {
   return (
     <div className="container mx-auto">
       <div className="h-screen container flex flex-wrap justify-around">
-        {likedCats.map((cat) => {
-          return <LikedCards cat={cat}/>;
+        {likedCats.map((cat, index) => {
+          return <LikedCards cat={cat} key={index} />;
         })}
       </div>
     </div>
