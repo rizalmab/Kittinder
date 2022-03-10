@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../context/context";
 
-const CreatedProfile = () => {
+const CreatedProfile = (props) => {
   const navigate = useNavigate();
   const [myCat, setMyCat] = useState({});
   const { id } = useParams();
+  console.log("props", props);
+
+  // Context
+  const values = useContext(UserContext);
+  console.log("values", values);
 
   const handleDelete = async () => {
     // axios delete call
@@ -13,12 +19,13 @@ const CreatedProfile = () => {
     console.log("response", response);
     // navigate to home page
     navigate("/");
+    values.setProfileMade(false);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`/api/cats/show/${id}`);
-      // console.log("responseCreatedProfile", response.data.data);
+      console.log("responseCreatedProfile", response.data.data);
       setMyCat(response.data.data);
     };
     fetchData();
