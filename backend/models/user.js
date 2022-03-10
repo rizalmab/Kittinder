@@ -7,16 +7,8 @@ const userSchema = new Schema({
   password: { type: String, required: true, minlength: 5 },
   displayName: { type: String },
   status: { type: String, default: "New" },
-  likedCats: [
-    {
-      catId: { type: Schema.Types.ObjectId, ref: "Cat" },
-    },
-  ],
-  dislikedCats: [
-    {
-      catId: { type: Schema.Types.ObjectId, ref: "Cat" },
-    },
-  ],
+  likedCats: [{ type: Schema.Types.ObjectId, ref: "Cat" }],
+  dislikedCats: [{ type: Schema.Types.ObjectId, ref: "Cat" }],
   //   points: { type: Number, default: 20 },
 });
 

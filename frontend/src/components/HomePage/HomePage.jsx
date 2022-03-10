@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
 import axios from "axios";
 import DatingCard from "react-tinder-card";
 // import SwipeButtons from "./SwipeButtons";
@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import StarRateIcon from "@material-ui/icons/StarRate";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import IconButton from "@material-ui/core/IconButton";
+import UserContext from "../context/context";
 
 const HomePage = () => {
   // used for outOfFrame closure
@@ -19,6 +20,7 @@ const HomePage = () => {
   const [lastDirection, setLastDirection] = useState();
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
+  const userData = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +30,7 @@ const HomePage = () => {
       setCurrentIndex(response?.data?.data.length - 1);
     };
     fetchData();
+    // console.log("userId", userData?.userData?.user?.id);
   }, []);
 
   const childRefs = useMemo(
@@ -38,6 +41,19 @@ const HomePage = () => {
     [catsArr]
   );
   // console.log("childRefs", childRefs);
+
+  const updateDb = async () => {
+    try {
+      const data = {
+        likedCatsArr: likedCatsArr,
+        dislikedCatsArr: dislikedCatsArr,
+        userId: userData?.userData?.user?.id,
+      };
+      await axios.put("/api/users", data);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
 
   //! updates the current index and currentIndexRef
   const updateCurrentIndex = (val) => {
@@ -61,6 +77,7 @@ const HomePage = () => {
     }
     console.log("dislikedCatsArr: ", dislikedCatsArr);
     console.log("likedCatsArr: ", likedCatsArr);
+    updateDb();
   };
 
   const outOfFrame = (name, idx) => {
@@ -96,6 +113,7 @@ const HomePage = () => {
     }
     console.log("dislikedCatsArr: ", dislikedCatsArr);
     console.log("likedCatsArr: ", likedCatsArr);
+    updateDb();
   };
 
   return (
