@@ -61,7 +61,7 @@ const MyProfile = () => {
   return (
     <div className="text-black">
       <div className="main-container flex p-20 h-screen">
-        <div className="container mx-auto inline-block w-1/2 h-4/5 border-2 border-solid rounded-lg">
+        <div className="container mx-auto flex justify-center w-1/2 h-4/5 border-2 border-solid rounded-lg">
           {/* Img uploader */}
           <img alt="cat" src={imgUrl} />
         </div>
