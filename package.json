@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "16.x"
+    "node": "16.13.1"
   },
   "bugs": {
     "url": "https://github.com/rizalmab/Kittinder/issues"
