@@ -16,6 +16,9 @@ function App() {
     token: undefined,
     user: undefined,
   });
+  const [profileMade, setProfileMade] = useState(false);
+  const [profileId, setProfileId] = useState(null);
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       // search for token
@@ -48,7 +51,16 @@ function App() {
   return (
     <div className="App ">
       <BrowserRouter>
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider
+          value={{
+            userData,
+            setUserData,
+            profileMade,
+            setProfileMade,
+            profileId,
+            setProfileId,
+          }}
+        >
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />

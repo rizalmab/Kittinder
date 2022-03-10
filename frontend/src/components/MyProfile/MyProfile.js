@@ -11,15 +11,17 @@ const MyProfile = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState(undefined);
   const [breed, setBreed] = useState(undefined);
-  // const [profileMade, setProfileMade] = useState(false);
   // const profileMadeRef = useRef(false);
   // console.log("profileMadeRef", profileMadeRef.current);
   const [createdCat, setCreatedCat] = useState({});
 
   const navigate = useNavigate();
 
+  // Global context
   const userDetails = useContext(UserContext);
-  // console.log("userId", userDetails.userData.user.id);
+  const profileMade = userDetails.profileMade;
+  console.log("userDetails", userDetails);
+  console.log("userDetails - setProfileMade()", userDetails.setProfileMade);
   const userId = userDetails.userData.user.id;
 
   const handleSubmit = (e) => {
@@ -38,11 +40,12 @@ const MyProfile = () => {
           user: { userId: userId },
         };
         const response = await axios.post("/api/cats/new", newCat);
-        // setProfileMade(true);
-        // profileMadeRef.current = true;
         setCreatedCat(newCat);
-        console.log("response", response);
-        console.log("createdCat", createdCat);
+        userDetails.setProfileMade(true);
+        // console.log("profileMade", userDetails.profileMade);
+        // console.log("response", response);
+        // console.log("createdCat", createdCat);
+        userDetails.setProfileId(response.data.data._id)
         navigate(`/created-profile/${response.data.data._id}`);
       } catch (err) {
         console.log("Error: ", err);
@@ -50,11 +53,6 @@ const MyProfile = () => {
     };
     createProfile();
   };
-
-  // const getRandomCat = async () => {
-  //   const randomCat = await axios.get("https://cataas.com/cat");
-  //   console.log("randomCat", randomCat);
-  // };
 
   console.log(catName, imgUrl, gender, age, breed);
 
