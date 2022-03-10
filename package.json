@@ -10,7 +10,7 @@
     "install-backend": "cd ./backend && npm install ",
     "frontend-build": "cd ./frontend && npm run build",
     "backend-build": "cd ./backend && npm run build",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run frontend-build && npm run install-backend && npm run backend-build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run frontend-build"
   },
   "repository": {
     "type": "git",
